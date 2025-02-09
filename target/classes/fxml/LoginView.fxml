@@ -3,13 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane fx:id="loginRoot" hgap="15.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="275.0" vgap="15.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1">
+<GridPane fx:id="loginRoot" hgap="15.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0" prefWidth="300.0" vgap="15.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1">
   <columnConstraints>
     <ColumnConstraints hgrow="NEVER" />
     <ColumnConstraints hgrow="SOMETIMES" />
@@ -21,10 +22,10 @@
       <RowConstraints minHeight="-Infinity" vgrow="NEVER" />
   </rowConstraints>
    <children>
-      <Label text="Usuario:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+      <Label text="Email:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
       <Label text="Contraseña:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      <TextField fx:id="usuarioTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="passwdTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="emailTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <PasswordField fx:id="passwdTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="INICIAR SESIÓN" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
       <HBox alignment="CENTER" spacing="5.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
          <children>

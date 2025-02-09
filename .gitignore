@@ -10,7 +10,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-**/firematch-d3817-firebase-adminsdk.json
+**/firematch-firebase-adminsdk.json
 # Package Files #
 *.jar
 *.war

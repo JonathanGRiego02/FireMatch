@@ -1,6 +1,6 @@
 package aed.firematch;
 
-import aed.firematch.ui.LoginController;
+import aed.firematch.ui.controllers.LoginController;
 import atlantafx.base.theme.NordDark;
 import javafx.application.Application;
 import javafx.scene.Scene;
