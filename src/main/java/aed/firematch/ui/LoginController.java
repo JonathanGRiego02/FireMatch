@@ -1,5 +1,6 @@
 package aed.firematch.ui;
 
+import aed.firematch.DBManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,10 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
+    // Model
+    private DBManager dbManager = new DBManager();
+
+    //  View
     @FXML
     private Button cerrarButton;
 
@@ -50,7 +55,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        dbManager.crearUsuario("user123", "Jonathan", "Gutiérrez", "jonathan@gmail.com", "jonathan123", "Amo la programación");
     }
 
 
