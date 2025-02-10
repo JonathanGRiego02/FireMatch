@@ -1,6 +1,6 @@
 package aed.firematch.ui.controllers;
 
-import aed.firematch.DBManager;
+import aed.firematch.firebase.DBManager;
 import aed.firematch.ui.modelos.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
