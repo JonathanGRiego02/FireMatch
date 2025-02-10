@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane fx:id="mainRoot" maxHeight="600.0" maxWidth="400.0" minHeight="600.0" minWidth="400.0" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="mainRoot" maxHeight="600.0" maxWidth="400.0" minHeight="600.0" minWidth="400.0" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" />
    </padding>
@@ -27,10 +28,11 @@
           <RowConstraints fillHeight="false" maxHeight="-Infinity" prefHeight="20.0" vgrow="SOMETIMES" />
             <RowConstraints fillHeight="false" maxHeight="-Infinity" prefHeight="20.0" vgrow="SOMETIMES" />
             <RowConstraints fillHeight="false" maxHeight="-Infinity" vgrow="SOMETIMES" />
+            <RowConstraints fillHeight="false" maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="-Infinity" prefHeight="150.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+            <ImageView fx:id="ligueImageView" fitHeight="250.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER">
                <image>
                   <Image url="@../../../../../../Pictures/Screenshots/Captura%20de%20pantalla%202024-12-17%20083521.png" />
                </image>
@@ -42,7 +44,7 @@
                </GridPane.margin>
             </Label>
             <Label fx:id="edadLabel" text="Edad" GridPane.rowIndex="2" />
-            <Button fx:id="likeButton" mnemonicParsing="false" onAction="#onLikeAction" prefHeight="150.0" prefWidth="175.0" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <Button fx:id="likeButton" mnemonicParsing="false" onAction="#onLikeAction" prefHeight="150.0" prefWidth="175.0" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <graphic>
                   <FontIcon iconLiteral="fas-heart" iconSize="100" />
                </graphic>
@@ -50,12 +52,20 @@
                   <Insets />
                </GridPane.margin>
             </Button>
-            <Button fx:id="passButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPassAction" prefHeight="150.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <Button fx:id="passButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onPassAction" prefHeight="150.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
                <graphic>
                   <FontIcon iconLiteral="fas-heart-broken" iconSize="100" />
                </graphic>
                <GridPane.margin>
                   <Insets />
+               </GridPane.margin>
+            </Button>
+            <Button fx:id="perfilButton" mnemonicParsing="false" onAction="#onPerfilAction" GridPane.rowIndex="4">
+               <graphic>
+                  <FontIcon iconLiteral="fas-plus" />
+               </graphic>
+               <GridPane.margin>
+                  <Insets bottom="10.0" />
                </GridPane.margin>
             </Button>
          </children>
@@ -72,11 +82,17 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="Tu perfil" />
+               </tooltip>
             </Button>
             <Button fx:id="ajustesButton" mnemonicParsing="false" onAction="#onAjustesAction" prefWidth="46.4">
                <graphic>
                   <FontIcon iconLiteral="fas-user-cog" iconSize="20" />
                </graphic>
+               <tooltip>
+                  <Tooltip text="Ajustes" />
+               </tooltip>
             </Button>
         </items>
       </ToolBar>

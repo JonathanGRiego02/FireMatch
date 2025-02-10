@@ -27,7 +27,7 @@ public class LoginController implements Initializable {
     private StringProperty email = new SimpleStringProperty();
     private StringProperty password = new SimpleStringProperty();
 
-    private MainController mainController = new MainController();
+    private MainController mainController;
 
 
     //  View
@@ -54,7 +54,14 @@ public class LoginController implements Initializable {
 
     @FXML
     void onLoginAction(ActionEvent event) {
-        if (dbManager.login(email.getValue(), password.getValue())) {
+        Usuario usuario = dbManager.login(email.get(), password.get());
+        System.out.println("esta es: " + usuario.getId());
+        System.out.println("esta es nombre: " + usuario.getNombre());
+        if (usuario != null) {
+
+            mainController = new MainController(usuario);
+            mainController.setDbManager(dbManager);
+
             // Cerrar la ventana de login
             Stage stage = (Stage) loginButton.getScene().getWindow();
             stage.close();
@@ -63,7 +70,6 @@ public class LoginController implements Initializable {
             Stage mainStage = new Stage();
             Scene scene = new Scene(mainController.getRoot());
             mainStage.setScene(scene);
-            // Make the stage not resizable
             mainStage.setResizable(false);
             mainStage.setTitle("FireMatch");
             mainStage.show();

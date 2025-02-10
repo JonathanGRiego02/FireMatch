@@ -8,16 +8,18 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class DBManager {
 
     private Firestore db;
+
 
     public DBManager() {
         try {
@@ -121,19 +123,99 @@ public class DBManager {
 
 
 
-    public boolean login(String usuario, String password) {
+    public Usuario login(String email, String password) {
         CollectionReference usuariosRef = db.collection("FireMatch").document("Usuarios").collection("ListaUsuarios");
-        Query query = usuariosRef.whereEqualTo("email", usuario).whereEqualTo("password", password);
+        Query query = usuariosRef.whereEqualTo("email", email).whereEqualTo("password", password);
 
         try {
             ApiFuture<QuerySnapshot> querySnapshot = query.get();
             for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
-                System.out.println("Usuario autenticado: " + document.getId());
-                return true;
+                if (document.exists()) {
+                    // Extraer datos del documento
+                    int id = Integer.parseInt(document.getId()); // El ID es la clave del documento
+                    String nombre = document.getString("nombre");
+                    String apellidos = document.getString("apellidos");
+                    String nickname = document.getString("nickname");
+                    String descripcion = document.getString("descripcion");
+                    int edad = document.getLong("edad").intValue();
+                    Genero genero = Genero.valueOf(document.getString("genero"));
+
+                    // Obtener características
+                    CollectionReference caracteristicasRef = document.getReference().collection("Caracteristicas");
+                    ApiFuture<QuerySnapshot> caracteristicasSnapshot = caracteristicasRef.get();
+                    ObservableList<String> caracteristicasList = FXCollections.observableArrayList();
+                    for (DocumentSnapshot charDoc : caracteristicasSnapshot.get().getDocuments()) {
+                        caracteristicasList.add(charDoc.getString("valor"));
+                    }
+
+                    // Obtener gustos
+                    CollectionReference gustosRef = document.getReference().collection("Gustos");
+                    ApiFuture<QuerySnapshot> gustosSnapshot = gustosRef.get();
+                    ObservableList<Genero> gustosList = FXCollections.observableArrayList();
+                    for (DocumentSnapshot gustoDoc : gustosSnapshot.get().getDocuments()) {
+                        gustosList.add(Genero.valueOf(gustoDoc.getString("valor")));
+                    }
+
+                    // Crear y retornar el objeto Usuario
+                    return new Usuario(id, nombre, apellidos, nickname, email, password, descripcion, edad, genero, caracteristicasList, gustosList);
+                }
             }
         } catch (InterruptedException | ExecutionException e) {
-            System.err.println("Error al autenticar usuario: " + e.getMessage());
+            System.err.println("❌ Error al autenticar usuario: " + e.getMessage());
         }
-        return false;
+        return null;
     }
+
+    public List<Usuario> GetUsuarios(Usuario usuarioLoged, int edadMin, int edadMax) {
+        List<Usuario> usuariosList = new ArrayList<>();
+        CollectionReference usuariosRef = db.collection("FireMatch").document("Usuarios").collection("ListaUsuarios");
+        System.out.println("Usuario logeado: " + usuarioLoged.getId());
+        try {
+            ApiFuture<QuerySnapshot> querySnapshot = usuariosRef.get();
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+                if (document.exists()) {
+                    int id = Integer.parseInt(document.getId());
+                    if (id == usuarioLoged.getId()) {
+                        continue;
+                    }
+
+                    String nombre = document.getString("nombre");
+                    String apellidos = document.getString("apellidos");
+                    String nickname = document.getString("nickname");
+                    String email = document.getString("email");
+                    String password = document.getString("password");
+                    String descripcion = document.getString("descripcion");
+                    int edad = document.getLong("edad").intValue();
+                    Genero genero = Genero.valueOf(document.getString("genero"));
+
+                    CollectionReference caracteristicasRef = document.getReference().collection("Caracteristicas");
+                    ApiFuture<QuerySnapshot> caracteristicasSnapshot = caracteristicasRef.get();
+                    ObservableList<String> caracteristicasList = FXCollections.observableArrayList();
+                    for (DocumentSnapshot charDoc : caracteristicasSnapshot.get().getDocuments()) {
+                        caracteristicasList.add(charDoc.getString("valor"));
+                    }
+
+                    CollectionReference gustosRef = document.getReference().collection("Gustos");
+                    ApiFuture<QuerySnapshot> gustosSnapshot = gustosRef.get();
+                    ObservableList<Genero> gustosList = FXCollections.observableArrayList();
+                    for (DocumentSnapshot gustoDoc : gustosSnapshot.get().getDocuments()) {
+                        gustosList.add(Genero.valueOf(gustoDoc.getString("valor")));
+                    }
+
+                    if (usuarioLoged.getGustos().contains(genero) && edad >= edadMin && edad <= edadMax) {
+                        Usuario usuario = new Usuario(id, nombre, apellidos, nickname, email, password, descripcion, edad, genero, caracteristicasList, gustosList);
+                        usuariosList.add(usuario);
+                    }
+                }
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            System.err.println("❌ Error al obtener usuarios: " + e.getMessage());
+        }
+
+        Collections.shuffle(usuariosList);
+
+        return usuariosList;
+    }
+
+
 }

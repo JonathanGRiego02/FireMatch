@@ -24,6 +24,22 @@ public class  Usuario {
     public Usuario() {
     }
 
+    public Usuario(int id, String nombre, String apellidos, String nickname, String email, String password,
+                   String descripcion, int edad, Genero genero, ObservableList<String> caracteristicas,
+                   ObservableList<Genero> gustos) {
+        this.id.set(id);
+        this.nombre.set(nombre);
+        this.apellidos.set(apellidos);
+        this.nickname.set(nickname);
+        this.email.set(email);
+        this.password.set(password);
+        this.descripcion.set(descripcion);
+        this.edad.set(edad);
+        this.genero.set(genero);
+        this.caracteristicas.set(FXCollections.observableArrayList(caracteristicas));
+        this.gustos.set(FXCollections.observableArrayList(gustos));
+    }
+
     public int getEdad() {
         return edad.get();
     }
