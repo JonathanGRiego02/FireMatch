@@ -1,9 +1,12 @@
 package aed.firematch.ui.controllers;
 
 import aed.firematch.firebase.DBManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
 import java.net.URL;
@@ -16,7 +19,48 @@ public class MainController implements Initializable {
 
     // View
     @FXML
+    private Button ajustesButton;
+
+    @FXML
+    private Label descripcionLabel;
+
+    @FXML
+    private Label edadLabel;
+
+    @FXML
+    private Button likeButton;
+
+    @FXML
     private BorderPane mainRoot;
+
+    @FXML
+    private Button menuButton;
+
+    @FXML
+    private Label nombreLabel;
+
+    @FXML
+    private Button passButton;
+
+    @FXML
+    void onAjustesAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onLikeAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onMenuAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onPassAction(ActionEvent event) {
+
+    }
 
     public MainController() {
         try {

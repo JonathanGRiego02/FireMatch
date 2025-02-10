@@ -89,21 +89,6 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Usuario usuario = new Usuario();
-        usuario.setId(1);
-        usuario.setEmail("jonathan@gmail.com");
-        usuario.setNombre("Jonathan");
-        usuario.setApellidos("Gutiérrez");
-        usuario.setEdad(22);
-        usuario.setPassword("jonathan123");
-        usuario.setDescripcion("Amo la programación");
-        usuario.setNickname("jonathan_gr");
-        usuario.getCaracteristicas().add("Me gusta el furbo");
-        usuario.getGustos().add(Genero.FEMENINO);
-        usuario.getGustos().add(Genero.MASCULINO);
-        usuario.getGustos().add(Genero.NO_BINARIO);
-        usuario.getGustos().add(Genero.OTRO);
-        dbManager.crearUsuario(usuario);
         email.bindBidirectional(emailTextField.textProperty());
         password.bindBidirectional(passwdTextField.textProperty());
     }
