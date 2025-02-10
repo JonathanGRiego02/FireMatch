@@ -169,14 +169,18 @@ public class DBManager {
     public List<Usuario> GetUsuarios(Usuario usuarioLoged, int edadMin, int edadMax) {
         List<Usuario> usuariosList = new ArrayList<>();
         CollectionReference usuariosRef = db.collection("FireMatch").document("Usuarios").collection("ListaUsuarios");
+
         System.out.println("Usuario logeado: " + usuarioLoged.getId());
+        System.out.println("Edades permitidas: " + edadMin + " - " + edadMax);
+        System.out.println("Gustos del usuario logeado: " + usuarioLoged.getGustos());
+
         try {
             ApiFuture<QuerySnapshot> querySnapshot = usuariosRef.get();
             for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
                 if (document.exists()) {
                     int id = Integer.parseInt(document.getId());
                     if (id == usuarioLoged.getId()) {
-                        continue;
+                        continue; // No incluir al usuario logeado en la lista de resultados
                     }
 
                     String nombre = document.getString("nombre");
@@ -185,9 +189,29 @@ public class DBManager {
                     String email = document.getString("email");
                     String password = document.getString("password");
                     String descripcion = document.getString("descripcion");
-                    int edad = document.getLong("edad").intValue();
-                    Genero genero = Genero.valueOf(document.getString("genero"));
 
+                    // Verificar si la edad es válida
+                    Long edadLong = document.getLong("edad");
+                    if (edadLong == null) {
+                        System.out.println("⚠️ Edad no encontrada para usuario " + id);
+                        continue; // Saltar este usuario
+                    }
+                    int edad = edadLong.intValue();
+
+                    if (edad < edadMin || edad > edadMax) {
+                        System.out.println("❌ Usuario " + id + " fuera del rango de edad (" + edad + ")");
+                        continue; // Saltar si está fuera del rango de edad
+                    }
+
+                    Genero genero;
+                    try {
+                        genero = Genero.valueOf(document.getString("genero"));
+                    } catch (IllegalArgumentException | NullPointerException e) {
+                        System.out.println("⚠️ Género inválido o nulo para usuario " + id);
+                        continue; // Saltar si el género no es válido
+                    }
+
+                    // Obtener características
                     CollectionReference caracteristicasRef = document.getReference().collection("Caracteristicas");
                     ApiFuture<QuerySnapshot> caracteristicasSnapshot = caracteristicasRef.get();
                     ObservableList<String> caracteristicasList = FXCollections.observableArrayList();
@@ -195,27 +219,42 @@ public class DBManager {
                         caracteristicasList.add(charDoc.getString("valor"));
                     }
 
+                    // Obtener gustos del usuario actual
                     CollectionReference gustosRef = document.getReference().collection("Gustos");
                     ApiFuture<QuerySnapshot> gustosSnapshot = gustosRef.get();
                     ObservableList<Genero> gustosList = FXCollections.observableArrayList();
                     for (DocumentSnapshot gustoDoc : gustosSnapshot.get().getDocuments()) {
-                        gustosList.add(Genero.valueOf(gustoDoc.getString("valor")));
+                        try {
+                            gustosList.add(Genero.valueOf(gustoDoc.getString("valor")));
+                        } catch (IllegalArgumentException | NullPointerException e) {
+                            System.out.println("⚠️ Gusto inválido encontrado para usuario " + id);
+                        }
                     }
 
-                    if (usuarioLoged.getGustos().contains(genero) && edad >= edadMin && edad <= edadMax) {
-                        Usuario usuario = new Usuario(id, nombre, apellidos, nickname, email, password, descripcion, edad, genero, caracteristicasList, gustosList);
-                        usuariosList.add(usuario);
+                    // Validar que al menos un gusto del usuario logeado coincide con el género del usuario revisado
+                    boolean generoCoincide = usuarioLoged.getGustos().stream().anyMatch(g -> g == genero);
+
+                    if (!generoCoincide) {
+                        System.out.println("❌ Usuario " + id + " no coincide en gustos de género.");
+                        continue;
                     }
+
+                    // Si pasa todos los filtros, agregar a la lista
+                    Usuario usuario = new Usuario(id, nombre, apellidos, nickname, email, password, descripcion, edad, genero, caracteristicasList, gustosList);
+                    usuariosList.add(usuario);
+                    System.out.println("✅ Usuario agregado: " + id + " - " + nombre);
                 }
             }
         } catch (InterruptedException | ExecutionException e) {
             System.err.println("❌ Error al obtener usuarios: " + e.getMessage());
         }
 
+        // Mezclar aleatoriamente la lista de usuarios antes de devolverla
         Collections.shuffle(usuariosList);
 
         return usuariosList;
     }
+
 
 
 }

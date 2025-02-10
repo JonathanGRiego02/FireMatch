@@ -94,6 +94,14 @@
                   <Tooltip text="Ajustes" />
                </tooltip>
             </Button>
+            <Button fx:id="matchButton" mnemonicParsing="false" onAction="#onMatchAction" prefWidth="46.4">
+               <tooltip>
+                  <Tooltip text="Matches" />
+               </tooltip>
+               <graphic>
+                  <FontIcon iconLiteral="far-grin-hearts" iconSize="20" />
+               </graphic>
+            </Button>
         </items>
       </ToolBar>
    </top>
