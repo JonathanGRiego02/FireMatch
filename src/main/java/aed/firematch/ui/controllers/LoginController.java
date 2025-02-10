@@ -1,6 +1,7 @@
 package aed.firematch.ui.controllers;
 
 import aed.firematch.firebase.DBManager;
+import aed.firematch.ui.modelos.Genero;
 import aed.firematch.ui.modelos.Usuario;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -62,6 +63,8 @@ public class LoginController implements Initializable {
             Stage mainStage = new Stage();
             Scene scene = new Scene(mainController.getRoot());
             mainStage.setScene(scene);
+            // Make the stage not resizable
+            mainStage.setResizable(false);
             mainStage.setTitle("FireMatch");
             mainStage.show();
         } else {
@@ -91,10 +94,15 @@ public class LoginController implements Initializable {
         usuario.setEmail("jonathan@gmail.com");
         usuario.setNombre("Jonathan");
         usuario.setApellidos("Gutiérrez");
+        usuario.setEdad(22);
         usuario.setPassword("jonathan123");
         usuario.setDescripcion("Amo la programación");
         usuario.setNickname("jonathan_gr");
         usuario.getCaracteristicas().add("Me gusta el furbo");
+        usuario.getGustos().add(Genero.FEMENINO);
+        usuario.getGustos().add(Genero.MASCULINO);
+        usuario.getGustos().add(Genero.NO_BINARIO);
+        usuario.getGustos().add(Genero.OTRO);
         dbManager.crearUsuario(usuario);
         email.bindBidirectional(emailTextField.textProperty());
         password.bindBidirectional(passwdTextField.textProperty());

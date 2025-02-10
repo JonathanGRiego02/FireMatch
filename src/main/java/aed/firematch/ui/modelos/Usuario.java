@@ -5,20 +5,59 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 
-public class Usuario {
+public class  Usuario {
 
     // Atributos
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty nombre = new SimpleStringProperty();
     private StringProperty apellidos = new SimpleStringProperty();
+    private IntegerProperty edad = new SimpleIntegerProperty();
     private StringProperty nickname = new SimpleStringProperty();
     private StringProperty email = new SimpleStringProperty();
     private StringProperty password = new SimpleStringProperty();
     private StringProperty descripcion = new SimpleStringProperty();
+    private ObjectProperty<Genero> genero = new SimpleObjectProperty<>();
     private Image fotoPerfil;
+    private ListProperty<Genero> gustos = new SimpleListProperty<>(FXCollections.observableArrayList());
     private ListProperty<String> caracteristicas = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public Usuario() {
+    }
+
+    public int getEdad() {
+        return edad.get();
+    }
+
+    public IntegerProperty edadProperty() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad.set(edad);
+    }
+
+    public Genero getGenero() {
+        return genero.get();
+    }
+
+    public ObjectProperty<Genero> generoProperty() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero.set(genero);
+    }
+
+    public ObservableList<Genero> getGustos() {
+        return gustos.get();
+    }
+
+    public ListProperty<Genero> gustosProperty() {
+        return gustos;
+    }
+
+    public void setGustos(ObservableList<Genero> gustos) {
+        this.gustos.set(gustos);
     }
 
     public int getId() {

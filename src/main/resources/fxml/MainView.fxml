@@ -1,18 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-
-<BorderPane fx:id="mainRoot" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="mainRoot" maxHeight="600.0" maxWidth="400.0" minHeight="600.0" minWidth="400.0" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" />
+   </padding>
    <center>
-      <VBox BorderPane.alignment="CENTER">
+      <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="550.0" prefWidth="350.0" vgap="5.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" />
+          <ColumnConstraints hgrow="SOMETIMES" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+            <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints fillHeight="false" vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <Label text="Nombre" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+               <image>
+                  <Image url="@../../../../../../Pictures/Screenshots/Captura%20de%20pantalla%202024-12-17%20083521.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="nombreLabel" text="Nombre" GridPane.rowIndex="2" />
+            <Label fx:id="descripcionLabel" text="Descripcion" GridPane.rowIndex="4" />
+            <Label fx:id="edadLabel" text="Edad" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" text="Button" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+            <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
          </children>
-      </VBox>
+      </GridPane>
    </center>
+   <top>
+      <MenuBar BorderPane.alignment="BOTTOM_CENTER">
+        <menus>
+          <Menu mnemonicParsing="false">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Mi perfil" />
+                  <MenuItem mnemonicParsing="false" text="Mis match" />
+            </items>
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../logo-removebg-preview.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Opciones">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Ajustes" />
+            </items>
+          </Menu>
+        </menus>
+         <BorderPane.margin>
+            <Insets left="-5.0" right="-5.0" />
+         </BorderPane.margin>
+      </MenuBar>
+   </top>
 </BorderPane>
