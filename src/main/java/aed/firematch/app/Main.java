@@ -1,4 +1,4 @@
-package aed.firematch;
+package aed.firematch.app;
 
 import javafx.application.Application;
 

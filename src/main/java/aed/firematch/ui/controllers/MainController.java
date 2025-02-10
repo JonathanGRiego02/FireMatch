@@ -1,6 +1,6 @@
 package aed.firematch.ui.controllers;
 
-import aed.firematch.DBManager;
+import aed.firematch.firebase.DBManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

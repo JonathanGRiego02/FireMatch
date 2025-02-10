@@ -1,4 +1,4 @@
-package aed.firematch;
+package aed.firematch.firebase;
 
 import aed.firematch.ui.modelos.Usuario;
 import com.google.api.core.ApiFuture;
