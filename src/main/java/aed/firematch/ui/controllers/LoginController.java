@@ -47,7 +47,8 @@ public class LoginController implements Initializable {
 
     @FXML
     void onCerrarButton(ActionEvent event) {
-
+        Stage stage = (Stage) cerrarButton.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
